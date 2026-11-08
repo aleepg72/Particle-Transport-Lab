@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.run.xml
+*.bcf
+*.xdv
+
+# C++ build output
+build/
+*.o
