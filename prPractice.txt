@@ -1,1 +1,0 @@
-This text will be submitted through a Pull Request.

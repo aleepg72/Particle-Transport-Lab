@@ -1,3 +1,0 @@
-This file belongs to the git-practice branch!
-
-New changes were made in git-practice.
