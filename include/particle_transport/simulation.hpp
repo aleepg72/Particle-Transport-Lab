@@ -2,7 +2,7 @@
 
 #include <random>
 
-#include "particle_transport/system.hpp"
+#include "particle_transport/particle_system.hpp"
 
 
 namespace particle_transport

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "particle_transport/system.hpp"
+#include "particle_transport/particle_system.hpp"
 #include "particle_transport/simulation.hpp"
 
 
