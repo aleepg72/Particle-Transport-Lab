@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "particle_transport/particle.hpp"
 #include "particle_transport/system.hpp"
+#include "particle_transport/simulation.hpp"
 
 
 int main()
@@ -24,6 +24,14 @@ int main()
         std::cout << "(" << particleSystem.particles[i].x << ", " << particleSystem.particles[i].y << ")\n";
     }
     std::cout << "and diffusion coefficient D = " << particleSystem.D << '\n';
+
+    particle_transport::Simulation simulation;
+    simulation.step(particleSystem);
+    std::cout << "---\n" << "Positions after one step, at time t = " << simulation.t << ":\n";
+    for (std::size_t i{}; i < particleSystem.particles.size(); ++i)
+    {
+        std::cout << "(" << particleSystem.particles[i].x << ", " << particleSystem.particles[i].y << ")\n";
+    }
 
     return 0;
 }
