@@ -26,3 +26,6 @@ __pycache__/
 # C++ build output
 build/
 *.o
+
+# Simulation output
+data/

@@ -8,6 +8,7 @@ project(ParticleTransportLab
 add_executable(ptl
     src/main.cpp
     src/simulation.cpp
+    src/trajectory_io.cpp
 )
 
 target_compile_features(ptl PRIVATE cxx_std_20)
