@@ -13,25 +13,18 @@ int main()
     particle_transport::ParticleSystem particleSystem;
 
     // positions
-    particleSystem.particles.resize(3);
-    particleSystem.particles[0] = {0.0, 0.0};
-    particleSystem.particles[1] = {1.0, 1.0};
-    particleSystem.particles[2] = {2.0, 2.0};
+    particleSystem.particles.resize(5000);
+    for (std::size_t i{}; i < 5000; ++i)
+    {
+        particleSystem.particles[i] = {0.0, 0.0}; // no interactions, overlaps are allowed
+    }
 
     // diffusion coefficient
     particleSystem.D = 3.0;
 
-    std::cout << particleSystem.particles.size() << " particles with positions:\n";
-    for (std::size_t i{}; i < particleSystem.particles.size(); ++i)
-    {
-        std::cout << "(" << particleSystem.particles[i].x << ", " << particleSystem.particles[i].y << ")\n";
-    }
-    std::cout << "and diffusion coefficient D = " << particleSystem.D << '\n';
-
+    // simulation parameters and seeding
     particle_transport::Simulation simulation;
     simulation.setSeed(1);
-
-    // --- test ---
 
     // create output directory
     std::filesystem::path outputPath{"data/test.csv"};
@@ -75,7 +68,6 @@ int main()
     {
         simulation.step(particleSystem);
         particle_transport::writeSnapshot(output, particleSystem, simulation.t);
-
     }
 
     output.close();
@@ -85,15 +77,6 @@ int main()
         std::cerr << "Error writing to file\n";
 
         return 1;
-    }
-
-    // --- test ---
-
-    std::cout << "---\n"
-              << "Positions after 100 steps, at time t = " << simulation.t << ":\n";
-    for (std::size_t i{}; i < particleSystem.particles.size(); ++i)
-    {
-        std::cout << "(" << particleSystem.particles[i].x << ", " << particleSystem.particles[i].y << ")\n";
     }
 
     return 0;
