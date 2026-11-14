@@ -1,8 +1,7 @@
-#include <iostream>
-#include <fstream>
-#include <filesystem>
-#include <system_error>
 #include <cstddef>
+#include <fstream>
+#include <iostream>
+#include <system_error>
 
 #include "particle_transport/particle_system.hpp"
 #include "particle_transport/simulation.hpp"
@@ -12,69 +11,57 @@ int main()
 {
     particle_transport::ParticleSystem particleSystem;
 
-    // positions
-    particleSystem.particles.resize(5000);
-    for (std::size_t i{}; i < 5000; ++i)
-    {
-        particleSystem.particles[i] = {0.0, 0.0}; // no interactions, overlaps are allowed
-    }
-
-    // diffusion coefficient
-    particleSystem.D = 3.0;
-
     // simulation parameters and seeding
     particle_transport::Simulation simulation;
     simulation.setSeed(1);
 
-    // create output directory
-    std::filesystem::path outputPath{"data/test.csv"};
-    std::filesystem::path directory{outputPath.parent_path()};
+    // generate output file
+    std::ofstream output;
+    std::error_code error;
 
-    std::error_code errorCode;
-
-    if (!directory.empty())
+    if (!particle_transport::initialiseTrajectoryFile(output, particle_transport::defaultOutputPath, error))
     {
-        std::filesystem::create_directories(directory, errorCode);
+        std::cerr << "Failed to initialise output file. " << error.message() << '\n';
 
-        if (errorCode)
+        return 1;
+    }
+
+    // write initial position
+    if (!particle_transport::writeSnapshot(output, particleSystem, simulation.t, error))
+    {
+        std::cerr << "IO Error. " << error.message() << '\n'
+                  << "Closing file...\n";
+
+        if (!particle_transport::closeTrajectoryFile(output, error))
         {
-            std::cerr << "Failed to create output directory: "
-                      << errorCode.message() << '\n';
+            std::cerr << "IO Error. " << error.message() << '\n';
+        }
+
+        return 1;
+    }
+
+    // run simulation
+    for (std::size_t i{}; i < simulation.nSteps; ++i)
+    {
+        simulation.step(particleSystem);
+
+        if (!particle_transport::writeSnapshot(output, particleSystem, simulation.t, error))
+        {
+            std::cerr << "IO Error. " << error.message() << '\n'
+                    << "Closing file...\n";
+
+            if (!particle_transport::closeTrajectoryFile(output, error))
+            {
+                std::cerr << "IO Error. " << error.message() << '\n';
+            }
 
             return 1;
         }
     }
 
-    std::ofstream output{outputPath};
-
-    if (!output)
+    if (!particle_transport::closeTrajectoryFile(output, error))
     {
-        std::cerr << "Could not open " << outputPath << '\n';
-
-        return 1;
-    }
-
-    // header
-    output << "time,"
-           << "particle_id,"
-           << "x,"
-           << "y\n";
-
-    // initial position
-    particle_transport::writeSnapshot(output, particleSystem, simulation.t);
-
-    // run simulation
-    for (int i{}; i < 100; ++i)
-    {
-        simulation.step(particleSystem);
-        particle_transport::writeSnapshot(output, particleSystem, simulation.t);
-    }
-
-    output.close();
-
-    if (!output)
-    {
-        std::cerr << "Error writing to file\n";
+        std::cerr << "Failed closing file: " << error.message() << '\n';
 
         return 1;
     }

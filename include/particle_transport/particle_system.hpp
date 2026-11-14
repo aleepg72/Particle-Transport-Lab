@@ -9,7 +9,7 @@ namespace particle_transport
 {
     struct ParticleSystem
     {
-        std::vector<Particle> particles;
-        double D;
+        std::vector<Particle> particles{500, Particle{0.0, 0.0}};
+        double D{3};
     };
 }
