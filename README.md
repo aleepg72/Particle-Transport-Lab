@@ -15,19 +15,19 @@ The project currently supports Brownian motion, providing a simple framework for
 ## Physical Model
 The dynamics of a particle subject to both deterministic and stochastic forces are described by the Langevin equation
 
-$$ m \bm{\ddot{r}}(t) = -\gamma \bm{\dot{r}}(t) + \bm{F}(\bm{r}(t)) + \bm{\eta}(t),$$
+$$ m \boldsymbol{\ddot{r}}(t) = -\gamma \boldsymbol{\dot{r}}(t) + \boldsymbol{F}(\boldsymbol{r}(t)) + \boldsymbol{\eta}(t),$$
 
-where $m$ is the mass of the particle, $\gamma$ its friction coefficient, $\bm{F}$ the deterministic forces applied on the particle, and $\bm{\eta}(t) = \sqrt{2\Gamma}\,\xi(t)$ represents the stochastic force resulting from random collisions with the surrounding medium, where $\bm{\xi}$ is normalised Gaussian white noise and $\Gamma = \gamma k_B T$ sets the noise amplitude. The Fluctuation-Dissipation theorem further relates this amplitude to the diffusion coefficient $D = k_B T / \gamma$.
+where $m$ is the mass of the particle, $\gamma$ its friction coefficient, $\boldsymbol{F}$ the deterministic forces applied on the particle, and $\boldsymbol{\eta}(t) = \sqrt{2\Gamma}\,\xi(t)$ represents the stochastic force resulting from random collisions with the surrounding medium, where $\boldsymbol{\xi}$ is normalised Gaussian white noise and $\Gamma = \gamma k_B T$ sets the noise amplitude. The Fluctuation-Dissipation theorem further relates this amplitude to the diffusion coefficient $D = k_B T / \gamma$.
 
 In the overdamped limit, where inertial forces are negligible compared to friction, the dynamics are usually obtained numerically through the Euler–Maruyama discretisation
 
-$$ \bm{r}(t + \delta t) = \bm{r}(t) + \frac{\bm{F}(\bm{r}(t))}{\gamma}\, \delta t + \sqrt{2D\, \delta t}\, \bm{\xi},$$
+$$ \boldsymbol{r}(t + \delta t) = \boldsymbol{r}(t) + \frac{\boldsymbol{F}(\boldsymbol{r}(t))}{\gamma}\, \delta t + \sqrt{2D\, \delta t}\, \boldsymbol{\xi},$$
 
-where $\delta t$ is the integration timestep, and $\bm{\xi}$ is treated as a vector of independent standard normally distributed random variables. This is the case for our current implementation, where $\bm{F} = 0$.
+where $\delta t$ is the integration timestep, and $\boldsymbol{\xi}$ is treated as a vector of independent standard normally distributed random variables. This is the case for our current implementation, where $\boldsymbol{F} = 0$.
 
 In two dimensions, the mean-squared displacement (MSD) of Brownian particles is expected to follow
 
-$$ \langle |\bm{r}(t) - \bm{r}(0)|^2 \rangle = 4Dt. $$
+$$ \langle |\boldsymbol{r}(t) - \boldsymbol{r}(0)|^2 \rangle = 4Dt. $$
 
 
 ## Requirements
