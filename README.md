@@ -17,7 +17,7 @@ The dynamics of a particle subject to both deterministic and stochastic forces a
 
 $$ m \boldsymbol{\ddot{r}}(t) = -\gamma \boldsymbol{\dot{r}}(t) + \boldsymbol{F}(\boldsymbol{r}(t)) + \boldsymbol{\eta}(t),$$
 
-where $m$ is the mass of the particle, $\gamma$ its friction coefficient, $\boldsymbol{F}$ the deterministic forces applied on the particle, and $\boldsymbol{\eta}(t) = \sqrt{2\Gamma}\,\xi(t)$ represents the stochastic force resulting from random collisions with the surrounding medium, where $\boldsymbol{\xi}$ is normalised Gaussian white noise and $\Gamma = \gamma k_B T$ sets the noise amplitude. The Fluctuation-Dissipation theorem further relates this amplitude to the diffusion coefficient $D = k_B T / \gamma$.
+where $m$ is the mass of the particle, $\gamma$ its friction coefficient, $\boldsymbol{F}$ the deterministic forces applied on the particle, and $\boldsymbol{\eta}(t) = \sqrt{2\Gamma}\, \boldsymbol{\xi}(t)$ represents the stochastic force resulting from random collisions with the surrounding medium, where $\boldsymbol{\xi}$ is normalised Gaussian white noise and $\Gamma = \gamma k_B T$ sets the noise amplitude. The Fluctuation-Dissipation theorem further relates this amplitude to the diffusion coefficient $D = k_B T / \gamma$.
 
 In the overdamped limit, where inertial forces are negligible compared to friction, the dynamics are usually obtained numerically through the Euler–Maruyama discretisation
 
